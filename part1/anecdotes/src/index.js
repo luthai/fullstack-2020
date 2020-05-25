@@ -2,6 +2,29 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}>{text}</button>
+)
+
+const MostVotes = ({ anecdotes, votes }) => {
+  let temp = 0
+  let index = 0
+  for (let i = 0; i < anecdotes.length; i++) {
+    if (votes[i] > temp) {
+      temp = votes[i]
+      index = i
+    }
+  }
+
+  return (
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[index]}</p>
+      <p>has {votes[index]} votes</p>
+    </div>
+  )
+}
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
@@ -18,10 +41,12 @@ const App = (props) => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{props.anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
-      <button onClick={handleVote}>vote</button>
-      <button onClick={handleClick}>next anecdotes</button>
+      <Button onClick={handleVote} text="vote" />
+      <Button onClick={handleClick} text="next anecdotes" /> 
+      <MostVotes anecdotes={anecdotes} votes={votes} />
     </div>
   )
 }
