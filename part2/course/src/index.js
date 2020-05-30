@@ -16,11 +16,23 @@ const Content = ({ parts }) => {
   )
 }
 
+const Total = ({ parts }) => {
+  let sum = 0
+  for (let i = 0; i < parts.length; i++) {
+    sum += parts[i].exercises
+  }
+
+  return (
+    <p><strong>Total of {sum} exercises</strong></p>
+  )
+}
+
 const Course = ({ course }) => {
   return (
     <div>
       <Header name={course.name} />
       <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>  
   ) 
 }
