@@ -17,13 +17,10 @@ const Content = ({ parts }) => {
 }
 
 const Total = ({ parts }) => {
-  let sum = 0
-  for (let i = 0; i < parts.length; i++) {
-    sum += parts[i].exercises
-  }
-
   return (
-    <p><strong>Total of {sum} exercises</strong></p>
+    <p><strong>
+      Total of {parts.map(part => part.exercises).reduce((acc, curr) => acc + curr)} exercises
+    </strong></p>
   )
 }
 
