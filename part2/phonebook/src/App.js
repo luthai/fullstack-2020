@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import './App.css'
 
 const Person = ({ person }) => 
-  <li>{person.name}</li>
+  <li>{person.name} {person.number}</li>
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas',
+      number: '040-1234567' }
   ])
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -22,16 +24,22 @@ const App = () => {
     
     if (nameExist === false) {
       const personObject = {
-        name: newName
+        name: newName,
+        number: newNumber
       }
   
       setPersons(persons.concat(personObject))
       setNewName('')
+      setNewNumber('')
     }
   }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
   }
 
   return (
@@ -43,6 +51,13 @@ const App = () => {
           <input 
             value={newName}
             onChange={handleNameChange}
+          />
+        </div>
+        <div>
+          number:
+          <input
+            value={newNumber}
+            onChange={handleNumberChange}
           />
         </div>
         <div>
