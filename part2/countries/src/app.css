@@ -3,3 +3,9 @@ ul.no-bullets {
   padding: 0; /* Remove padding */
   margin: 0; /* Remove margins */
 }
+
+.button {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+}

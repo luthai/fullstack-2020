@@ -3,56 +3,62 @@ import axios from 'axios'
 import './app.css'
 
 
-const FindCountry = ({ countries, filterName, filterCountries }) => {
-  if (filterName === '')
+const FindCountry = ({ filterName, countries, findCountry}) => {
+  if (filterName.length === '')
     return null
-  
+
+  let filterCountries = countries.filter(country => 
+    country.name.toUpperCase().includes(filterName.toLocaleUpperCase()))
+    
   if (filterCountries.length > 10)
-    return (<div>Too many matches, specify another filter.</div>)
+    return <div>Too many matches, specify another filter.</div>
   else if (filterCountries.length === 1)
-    return null
+    return <DisplayCountry country={filterCountries[0]} />
   else {
     return (  
       <ul className="no-bullets">
-          {filterCountries.map(country => <List key={country.name} value={country.name} />)}
-      </ul>
+      {filterCountries.map(country => 
+        <li key={country.name}>
+          {country.name}
+          <button className="button" onClick={() => findCountry(country)}>show</button>
+        </li>  
+      )}
+    </ul> 
     )
-  } 
+  }
 }
-
-const List = ({ value }) => {
-  return (
-    <li>{value}</li>
-  )
-}
-
-const DisplayCountry = ({ filterCountries }) => {
-  if (filterCountries.length !== 1)
+    
+const DisplayCountry = (props) => {
+  if (Array.isArray(props.country)) 
     return null
-
+  
   return (
     <div>
-      <h1>{filterCountries[0].name}</h1>
+      <h1>{props.country.name}</h1>
       <div>
-        capital {filterCountries[0].capital}
+        capital {props.country.capital}
         <br></br>
-        population {filterCountries[0].population}
+        population {props.country.population}
       </div>
       <div>
         <h2>Languages</h2>
         <ul>
-          {filterCountries[0].languages.map(language => 
-            <List key={language.name} value={language.name} />
+          {props.country.languages.map(language => 
+            <li key={language.name}>{language.name}</li>
           )}
         </ul>
-        <img src={filterCountries[0].flag} alt={filterCountries[0].name} width="96" height="96" /> 
-      </div>
-    </div>     
+        <img 
+          src={props.country.flag} 
+          alt={props.country.name} 
+          width="96" height="96" /> 
+        </div>
+    </div>
   )
 }
 
 const App = () => {
   const [ countries, setCountries ] = useState([])
+  const [ selectedCountry, setSelectedCountry ] = useState([])
   const [ filterName, setFilterName ] = useState('')
 
   const hook = () => {
@@ -64,13 +70,15 @@ const App = () => {
   }
 
   useEffect(hook, [])
-
-  let filterCountries = countries.filter(country => 
-    country.name.toUpperCase().includes(filterName.toLocaleUpperCase()))
   
   const handleFilterName = (event) => {
     setFilterName(event.target.value)
+    setSelectedCountry(null)
   }
+
+  const findCountry = (country) => {
+    setSelectedCountry(country)
+  }  
 
   return (
     <div>
@@ -81,12 +89,14 @@ const App = () => {
           onChange={handleFilterName} 
         />
       </form>
-      <FindCountry 
-        countries={countries} 
-        filterName={filterName} 
-        filterCountries={filterCountries}
-      />
-      <DisplayCountry filterCountries={filterCountries} />
+      {(selectedCountry === null)
+        ? <FindCountry 
+            filterName={filterName} 
+            countries={countries} 
+            findCountry={findCountry} 
+          />  
+        : <DisplayCountry country={selectedCountry} />
+      }
     </div>
   )
 }
