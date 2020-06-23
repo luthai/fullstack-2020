@@ -50,19 +50,24 @@ const PersonInput = ({ text, value, onChange }) => {
   )
 }
 
-const Persons = ({ persons, filterName }) => {
+const Persons = ({ persons, filterName, deletePerson }) => {
   return (
     <ul className="no-bullets">
       {persons.filter(person => 
         person.name.toUpperCase().includes(filterName.toUpperCase())).map(p => 
-        <Person key={p.name} person={p} />
+        <Person key={p.name} person={p} deletePerson={deletePerson}/>
       )}
     </ul>
   )
 }
 
-const Person = ({ person }) => 
-  <li>{person.name} {person.number}</li>
+const Person = ({ person, deletePerson }) => 
+  <li>
+    {person.name} {person.number}
+    <button onClick={() => deletePerson(person.id)}>delete</button>  
+  </li>
+
+
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
@@ -108,6 +113,18 @@ const App = () => {
     }
   }
 
+  const deletePerson = (id) => {
+    const personName = persons.find(person => person.id === id).name
+    if (window.confirm(`Delete ${personName}?`)) {
+      personService
+        .deletePerson(id)
+        .then(returnedPerson => {
+          console.log('data: ', returnedPerson)
+          setPersons(returnedPerson)
+        })
+    }    
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -140,6 +157,7 @@ const App = () => {
       <Persons
         persons={persons}
         filterName={filterName}
+        deletePerson={deletePerson}
       />
     </div>
   )
