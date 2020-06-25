@@ -85,19 +85,17 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    let nameExist = false
-    persons.forEach(function(person) {
-      if (person.name === newName) {
-        window.alert(`${newName} is already added to phonebook`)
-        nameExist = true
+
+    if (newName === '')
+      return null
+    
+    let found = persons.find(person => person.name === newName)
+    if(found === undefined) {
+      if (newNumber === '') {
+        window.alert(`Please enter a number.`)
+        return null    
       }
-    })
-    
-    if (newName === '') {
-      nameExist = true
-    }
-    
-    if (nameExist === false) {
+        
       const personObject = {
         name: newName,
         number: newNumber
@@ -110,7 +108,26 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
-    }
+    } else {
+      if ((newNumber === '') || (found.number === newNumber)) {
+        window.alert(`${newName} is already added to phonebook`)
+        return null
+      } else {
+        let confirm = window.confirm(`${newName} is already added to phonebook, 
+          replace the old number with a new one?`)
+        if (confirm) {
+          const personObject = {
+            name: newName,
+            number: newNumber
+          }
+
+          personService
+            .update(found.id, personObject)
+            .then(returnedPerson => 
+              setPersons(persons.map(person => person.id !== found.id ? person : returnedPerson)))
+        }
+      }     
+    } 
   }
 
   const deletePerson = (id) => {
@@ -119,7 +136,6 @@ const App = () => {
       personService
         .deletePerson(id)
         .then(returnedPerson => {
-          console.log('data: ', returnedPerson)
           setPersons(returnedPerson)
         })
     }    
