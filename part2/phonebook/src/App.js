@@ -67,13 +67,23 @@ const Person = ({ person, deletePerson }) =>
     <button onClick={() => deletePerson(person.id)}>delete</button>  
   </li>
 
-
+const Notification = ({ message }) => {
+  if (message === null)
+    return null
+  
+  return (
+    <div className='message'>
+      {message}
+    </div>
+  )  
+} 
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
+  const [ message, setMessage ] = useState(null)
 
   useEffect(() => {
     personService
@@ -107,7 +117,12 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setMessage(`Added ${returnedPerson.name}`)
         })
+      
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000) 
     } else {
       if ((newNumber === '') || (found.number === newNumber)) {
         window.alert(`${newName} is already added to phonebook`)
@@ -127,7 +142,7 @@ const App = () => {
               setPersons(persons.map(person => person.id !== found.id ? person : returnedPerson)))
         }
       }     
-    } 
+    }
   }
 
   const deletePerson = (id) => {
@@ -156,6 +171,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter
         text="filter shown with"
         value={filterName}
