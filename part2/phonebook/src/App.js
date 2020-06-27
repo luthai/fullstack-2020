@@ -78,12 +78,24 @@ const Notification = ({ message }) => {
   )  
 } 
 
+const ErrorNotification = ({ errorMessage }) => {
+  if (errorMessage === null)
+    return null
+
+  return (
+    <div className='errorMessage'>
+      {errorMessage}
+    </div>
+  )
+}
+
 const App = () => {
   const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
   const [ message, setMessage ] = useState(null)
+  const [ errorMessage, setErrorMessage ] = useState(null)
 
   useEffect(() => {
     personService
@@ -140,6 +152,13 @@ const App = () => {
             .update(found.id, personObject)
             .then(returnedPerson => 
               setPersons(persons.map(person => person.id !== found.id ? person : returnedPerson)))
+            .catch(error => {
+              setErrorMessage(`${found.name} was already removed from server.`)
+              setTimeout(() => {
+                setErrorMessage(null)
+              }, 5000)
+              setPersons(persons.filter(person => person.id !== found.id))
+            })
         }
       }     
     }
@@ -172,6 +191,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={message} />
+      <ErrorNotification errorMessage={errorMessage} />
       <Filter
         text="filter shown with"
         value={filterName}
