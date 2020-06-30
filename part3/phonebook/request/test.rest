@@ -1,1 +1,9 @@
-DELETE http://localhost:3001/api/persons/2
+@baseUrl = http://localhost:3001/api/persons
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "name": "John Johnsen",
+    "number": "123456754213"
+}
