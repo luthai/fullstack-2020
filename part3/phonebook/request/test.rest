@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3001/api/persons
+@baseUrl = https://mighty-refuge-33171.herokuapp.com/api/persons
 
 POST {{baseUrl}}
 Content-Type: application/json
