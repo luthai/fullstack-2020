@@ -1,4 +1,4 @@
-@baseUrl = https://mighty-refuge-33171.herokuapp.com/api/persons
+@baseUrl = http://localhost:3001/api/persons
 
 POST {{baseUrl}}
 Content-Type: application/json
@@ -6,4 +6,19 @@ Content-Type: application/json
 {
     "name": "Jon Johnson",
     "number": "123456754213"
+}
+
+######################
+
+GET {{baseUrl}}/5f061077e5674a08c8cc713d
+
+
+######################
+
+PUT {{baseUrl}}/5f0989d27887551448719dd6
+Content-Type: application/json
+
+{
+    "name": "Christopher",
+    "number": "8971345354"
 }
