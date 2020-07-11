@@ -41,30 +41,22 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-  const name = request.body.name
-  const number = request.body.number
+  const body = request.body
   
-  if (!name || !number) {
+  if (body.name === undefined) {
     return response.status(400).json({
-      error: 'content missing'
+      error: 'name missing'
     })
   }
 
-  if (persons.find(person => person.name === name)) {
-    return response.status(400).json({
-      error: 'person already added'
-    })
-  }
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  })
 
-  const person = {
-    name: name,
-    number: number,
-    id: Math.ceil(Math.random() * (1000 - 1) + 1)
-  }
-
-  persons = persons.concat(person)
-
-  response.json(person)
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
 app.get('/info', (request, response) => {
