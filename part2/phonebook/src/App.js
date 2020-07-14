@@ -1,93 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import personService from './services/persons'
-
-
-const Filter = ({ text, value, onChange }) => {
-  return (
-    <form>
-      <div>
-        {text} 
-        <input 
-          value={value}
-          onChange={onChange}
-        />
-      </div>
-    </form>
-  )
-}
-
-const PersonForm = ({ onSubmit, newName, onNameChange,
-  newNumber, onNumberChange }) => {
-  return (
-    <form onSubmit={onSubmit}>
-      <PersonInput 
-        text="name:"
-        value={newName}
-        onChange={onNameChange}
-      />
-      <PersonInput 
-        text="number:"
-        value={newNumber}
-        onChange={onNumberChange}
-      />
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form>
-  )
-}
-
-const PersonInput = ({ text, value, onChange }) => {
-  return (
-    <div>
-      {text} 
-      <input 
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  )
-}
-
-const Persons = ({ persons, filterName, deletePerson }) => {
-  return (
-    <ul className="no-bullets">
-      {persons.filter(person => 
-        person.name.toUpperCase().includes(filterName.toUpperCase())).map(p => 
-        <Person key={p.name} person={p} deletePerson={deletePerson}/>
-      )}
-    </ul>
-  )
-}
-
-const Person = ({ person, deletePerson }) => 
-  <li>
-    {person.name} {person.number}
-    <button onClick={() => deletePerson(person.id)}>delete</button>  
-  </li>
-
-const Notification = ({ message }) => {
-  if (message === null)
-    return null
-  
-  return (
-    <div className='message'>
-      {message}
-    </div>
-  )  
-} 
-
-const ErrorNotification = ({ errorMessage }) => {
-  if (errorMessage === null)
-    return null
-
-  return (
-    <div className='errorMessage'>
-      {errorMessage}
-    </div>
-  )
-}
+import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
+import Notification from './components/Notification'
+import ErrorNotification from './components/ErrorNotification'
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
@@ -102,6 +20,9 @@ const App = () => {
       .getAll()
       .then(initialPerson => {
         setPersons(initialPerson)
+      })
+      .catch(error => {
+        setErrorMessage(error.message)
       })  
   }, [])
 
@@ -130,6 +51,9 @@ const App = () => {
           setNewName('')
           setNewNumber('')
           setMessage(`Added ${returnedPerson.name}`)
+        })
+        .catch(error => {
+          setErrorMessage(error.message)
         })
       
       setTimeout(() => {
