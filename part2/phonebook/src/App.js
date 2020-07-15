@@ -21,9 +21,6 @@ const App = () => {
       .then(initialPerson => {
         setPersons(initialPerson)
       })
-      .catch(error => {
-        setErrorMessage(error.message)
-      })  
   }, [])
 
   const addPerson = (event) => {
@@ -53,7 +50,11 @@ const App = () => {
           setMessage(`Added ${returnedPerson.name}`)
         })
         .catch(error => {
-          setErrorMessage(error.message)
+          const errorMessage = error.response.data
+          setErrorMessage(errorMessage.error)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
       
       setTimeout(() => {
@@ -74,10 +75,16 @@ const App = () => {
 
           personService
             .update(found.id, personObject)
-            .then(returnedPerson => 
-              setPersons(persons.map(person => person.id !== found.id ? person : returnedPerson)))
+            .then(returnedPerson => {
+              setPersons(persons.map(person => person.id !== found.id ? person : returnedPerson))
+            })
             .catch(error => {
-              setErrorMessage(`${found.name} was already removed from server.`)
+              if (error.response.status === 400) {
+                const errorMessage = error.response.data
+                setErrorMessage(errorMessage.error)
+              } else if (error.response.status === 404) {
+                setErrorMessage(`${found.name} was already removed from server.`)
+              }
               setTimeout(() => {
                 setErrorMessage(null)
               }, 5000)
@@ -95,6 +102,13 @@ const App = () => {
         .deletePerson(id)
         .then(returnedPerson => {
           setPersons(returnedPerson)
+        })
+        .catch(error => {
+          setErrorMessage(`${personName} was already removed from server.`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+          setPersons(persons.filter(person => person.id !== id))
         })
     }    
   }
