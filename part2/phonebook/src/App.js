@@ -84,11 +84,11 @@ const App = () => {
                 setErrorMessage(errorMessage.error)
               } else if (error.response.status === 404) {
                 setErrorMessage(`${found.name} was already removed from server.`)
+                setPersons(persons.filter(person => person.id !== found.id))
               }
               setTimeout(() => {
                 setErrorMessage(null)
               }, 5000)
-              setPersons(persons.filter(person => person.id !== found.id))
             })
         }
       }     
