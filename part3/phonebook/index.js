@@ -70,23 +70,26 @@ app.post('/api/persons', (request, response, next) => {
 
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
-
+  
   const person = {
     name: body.name,
     number: body.number
   }
-
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  
+  const opts = { new: true , runValidators: true, context: 'query' }
+  Person.findByIdAndUpdate(request.params.id, person, opts)
     .then(updatedPerson => {
-      response.json(updatedPerson)
+      if (updatedPerson) {
+        response.json(updatedPerson)
+      } else {
+        next(error)
+      }   
     })
     .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({
-    error: 'unknown endpoint'
-  })
+  response.status(404).send({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)
@@ -95,10 +98,12 @@ const errorHandler = (error, request, response, next) => {
   console.log(error.message)
 
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id'})
+    return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message})
-  } 
+    return response.status(400).json({ error: error.message })
+  } else if (error.name === 'ReferenceError') {
+    return response.status(404).json()
+  }
 
   next(error)
 }

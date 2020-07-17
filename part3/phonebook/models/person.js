@@ -1,6 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
 const uniqueValidator = require('mongoose-unique-validator')
 
 const url = process.env.MONGODB_URI

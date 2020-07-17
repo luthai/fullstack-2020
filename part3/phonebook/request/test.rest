@@ -4,8 +4,8 @@ POST {{baseUrl}}
 Content-Type: application/json
 
 {
-    "name": "Hello",
-    "number": "12343"
+    "name": "He",
+    "number": "123512532"
 }
 
 ######################
@@ -15,10 +15,10 @@ GET {{baseUrl}}/5f061077e5674a08c8cc713d
 
 ######################
 
-PUT {{baseUrl}}/5f0989d27887551448719dd6
+PUT {{baseUrl}}/5f0f43108f646816c8fd5a6e
 Content-Type: application/json
 
 {
-    "name": "Christopher",
-    "number": "8971345354"
+    "name": "Hello",
+    "number": "12354736556"
 }
