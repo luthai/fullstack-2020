@@ -1,5 +1,3 @@
-const { request } = require("express")
-
 const mongoose = require('mongoose')
 
 const length = process.argv.length
@@ -10,10 +8,10 @@ if (!(length === 3 || length === 5)) {
 
 const password = process.argv[2]
 
-const url = 
+const url =
 `mongodb+srv://luthai:${password}@cluster0.aexyl.mongodb.net/phonebook-app?retryWrites=true&w=majority`
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const personSchema = new mongoose.Schema({
   name: String,

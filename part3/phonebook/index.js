@@ -4,7 +4,6 @@ const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
 
-const { request, response, json } = require('express')
 const app = express()
 
 app.use(express.json())
@@ -13,9 +12,9 @@ app.use(express.static('build'))
 
 morgan.token('body', function getBody(req) {
   if (Object.keys(req.body).length === 0 &&
-    req.body.constructor === Object) 
+    req.body.constructor === Object)
     return ' '
-  
+
   return JSON.stringify(req.body)
 })
 
@@ -41,15 +40,13 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
-      response.status(204).end()
-    })
+    .then(result => response.status(204).end())
     .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
-  
+
   if (body.name === undefined) {
     return response.status(400).json({
       error: 'name missing'
@@ -63,27 +60,27 @@ app.post('/api/persons', (request, response, next) => {
 
   person.save()
     .then(savedPerson => {
-    response.json(savedPerson)
+      response.json(savedPerson)
     })
     .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
-  
+
   const person = {
     name: body.name,
     number: body.number
   }
-  
+
   const opts = { new: true , runValidators: true, context: 'query' }
   Person.findByIdAndUpdate(request.params.id, person, opts)
     .then(updatedPerson => {
       if (updatedPerson) {
         response.json(updatedPerson)
       } else {
-        next(error)
-      }   
+        next()
+      }
     })
     .catch(error => next(error))
 })
@@ -111,9 +108,9 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 
 app.get('/info', (request, response) => {
-  let info = 
+  let info =
   `<div>
-    Phonebook has info for ${persons.length} people
+    Phonebook has info for ${Person.length} people
     <br></br>
     ${new Date()}
   </div>`
