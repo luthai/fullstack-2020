@@ -1,17 +1,15 @@
 /* eslint-disable no-underscore-dangle */
-require('dotenv').config();
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const config = require('../utils/config');
 const logger = require('../utils/logger');
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-const url = process.env.MONGODB_URI;
+logger.info(`connected to ${config.MONGODB_URI}`);
 
-logger.info(`connected to ${url}`);
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     logger.info('connected to MongoDB');
   })
