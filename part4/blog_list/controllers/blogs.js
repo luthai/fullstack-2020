@@ -6,12 +6,12 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs);
 });
 
-blogsRouter.post('/', async (request, response, next) => {
+blogsRouter.post('/', async (request, response) => {
   const { body } = request;
 
   if (body.title === undefined) {
     return response.status(400).json({
-      error: 'title missing',
+      error: 'blog missing',
     });
   }
 
@@ -26,12 +26,16 @@ blogsRouter.post('/', async (request, response, next) => {
   response.json(savedBlog);
 });
 
-blogsRouter.delete('/:id', (request, response, next) => {
-  Blog.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(400).end();
-    })
-    .catch((error) => next(error));
+blogsRouter.delete('/:id', async (request, response) => {
+  await Blog.findByIdAndRemove(request.params.id);
+  response.status(204).end();
+});
+
+blogsRouter.put('/:id', async (request, response) => {
+  const { body } = request;
+
+  const savedBlog = await Blog.findByIdAndUpdate(request.params.id, body, { new: true });
+  response.status(200).json(savedBlog);
 });
 
 module.exports = blogsRouter;
