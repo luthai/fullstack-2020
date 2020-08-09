@@ -2,32 +2,17 @@ const mongoose = require('mongoose');
 const supertest = require('supertest');
 const app = require('../app');
 const Blog = require('../models/blog');
+const helper = require('./test_helper');
 
 const api = supertest(app);
-
-const initialBlogs = [
-  {
-    title: 'React patterns',
-    author: 'Michael Chan',
-    url: 'https://reactpatterns.com/',
-    likes: 7,
-  },
-  {
-    title: 'Go To Statement Considered Harmful',
-    author: 'Edsger W. Dijkstra',
-    url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-    likes: 5,
-  },
-];
 
 beforeEach(async () => {
   await Blog.deleteMany({});
 
-  let blogObject = new Blog(initialBlogs[0]);
-  await blogObject.save();
-
-  blogObject = new Blog(initialBlogs[1]);
-  await blogObject.save();
+  const blogObject = helper.initialBlogs
+    .map((blog) => new Blog(blog));
+  const promiseArray = blogObject.map((blog) => blog.save());
+  await Promise.all(promiseArray);
 });
 
 test('blogs are returned as json', async () => {
@@ -57,11 +42,10 @@ test('creating a new blog successful', async () => {
     .expect(200)
     .expect('Content-Type', /application\/json/);
 
-  const response = await api.get('/api/blogs');
+  const blogsAtEnd = await helper.blogsInDb();
+  const url = blogsAtEnd.map((r) => r.url);
 
-  const url = response.body.map((r) => r.url);
-
-  expect(response.body).toHaveLength(initialBlogs.length + 1);
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1);
   expect(url).toContain(
     'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
   );
@@ -79,9 +63,9 @@ test('blog without likes returned 0', async () => {
     .send(newBlog)
     .expect(200);
 
-  const response = await api.get('/api/blogs');
+  const blogsAtEnd = await helper.blogsInDb();
 
-  expect(response.body[initialBlogs.length].likes).toBe(0);
+  expect(blogsAtEnd[helper.initialBlogs.length].likes).toBe(0);
 });
 
 test('blog without title and url is not added', async () => {
@@ -95,9 +79,9 @@ test('blog without title and url is not added', async () => {
     .send(newBlog)
     .expect(400);
 
-  const response = await api.get('/api/blogs');
+  const blogsAtEnd = await helper.blogsInDb();
 
-  expect(response.body).toHaveLength(initialBlogs.length);
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length);
 });
 
 afterAll(() => {
