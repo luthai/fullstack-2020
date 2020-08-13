@@ -43,6 +43,60 @@ describe('when there is initially one user in db', () => {
     const usernames = usersAtEnd.map((u) => u.username);
     expect(usernames).toContain('modx');
   });
+
+  test('creating user without password or length less than 3, returns error', async () => {
+    const usersAtStart = await helper.usersInDb();
+
+    // no password
+    const newUser = {
+      username: 'Jxx',
+      name: 'Johnson',
+    };
+
+    const failUser = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+
+    expect(failUser.error.message).toBe('cannot POST /api/users (400)');
+
+    // password less than 3
+    const newUser2 = {
+      username: 'Jayd',
+      name: 'Johns',
+      password: 'fd',
+    };
+
+    const failUser2 = await api
+      .post('/api/users')
+      .send(newUser2)
+      .expect(400);
+
+    expect(failUser2.error.message).toBe('cannot POST /api/users (400)');
+
+    const usersAtEnd = await helper.usersInDb();
+    expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  });
+
+  test('creating user with username length 1, returns error', async () => {
+    const usersAtStart = await helper.usersInDb();
+
+    const newUser = {
+      username: 'J',
+      name: 'Johns',
+      password: 'fdlfldsfjdskl',
+    };
+
+    const failUser = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400);
+
+    expect(failUser.error.message).toBe('cannot POST /api/users (400)');
+
+    const usersAtEnd = await helper.usersInDb();
+    expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  });
 });
 
 afterAll(() => {
