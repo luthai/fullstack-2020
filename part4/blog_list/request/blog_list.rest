@@ -2,7 +2,7 @@
 
 POST {{baseUrl}}/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY3NzIxOTlmYzViM2IzODAyYmQyYSIsImlhdCI6MTU5NzQwNDk3OH0.HyG2Qj2SrW0WtZMYaXHMjDUqo_cX92M8us1Qo6Pd5fs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY5OTQ0NDdkYjhhMjQ1MDlmMTdjOSIsImlhdCI6MTU5NzQxNjM1Mn0.jIGevHdhFkYrDz-Cl4M4eqRnG3p4FvMqR25NyzyY1lA
 
 {
     "title": "React",
@@ -13,7 +13,8 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
 
 ###################################
 
-DELETE {{baseUrl}}/blogs/
+DELETE {{baseUrl}}/blogs/5f36b5287d907838c84eb552
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOiI1ZjM2YjVmOTdkOTA3ODM4Yzg0ZWI1NTMiLCJpYXQiOjE1OTc0MjExMDZ9.XQuG3XajdnKliIJWmXomplQ_wnESh7KBPGSOgMCYec4
 
 ###################################
 
@@ -27,10 +28,21 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
 
 ###################################
 
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+   "username": "admin",
+   "name": "Steven",
+   "password": "Fish"
+}
+
+###################################
+
 POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "username": "root",
-    "password": "sekret"
+    "username": "admin",
+    "password": "Fish"
 }
