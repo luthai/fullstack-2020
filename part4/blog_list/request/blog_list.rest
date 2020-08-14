@@ -2,13 +2,13 @@
 
 POST {{baseUrl}}/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY2MjY4OWY0ZDRiMDVkNDk5MjNkNSIsImlhdCI6MTU5NzQwMTU1NH0.INKTy-YdtGmWxupXoaEQcO2cMJYQ3vmfum5gHTLO4BE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY2MjY4OWY0ZDRiMDVkNDk5MjNkNSIsImlhdCI6MTU5NzQwMjg2Nn0.FJtg7odiHnQLdMTQa5I7v1jrJI3Ta7vKW2yWs7-lVBI
 
 {
     "title": "React patterns",
     "author": "Michael Chan",
     "url": "https://reactpatterns.com/",
-    "likes": 7,
+    "likes": 7
 }
 
 ###################################
@@ -19,7 +19,8 @@ DELETE {{baseUrl}}/blogs/
 
 PUT {{baseUrl}}/blogs/5f09b01bd4fc8820383f66eb
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY2MjY4OWY0ZDRiMDVkNDk5MjNkNSIsImlhdCI6MTU5NzQwMTU1NH0.INKTy-YdtGmWxupXoaEQcO2cMJYQ3vmfum5gHTLO4BE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY2MjY4OWY0ZDRiMDVkNDk5MjNkNSIsImlhdCI6MTU5NzQwMjg2Nn0.FJtg7odiHnQLdMTQa5I7v1jrJI3Ta7vKW2yWs7-lVBI
+
 {
    
 }
