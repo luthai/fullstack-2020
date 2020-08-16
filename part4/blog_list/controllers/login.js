@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const loginRouter = require('express').Router();
+const config = require('../utils/config');
 const User = require('../models/user');
 
 loginRouter.post('/', async (request, response) => {
@@ -22,8 +24,8 @@ loginRouter.post('/', async (request, response) => {
     id: user.id,
   };
 
-  const token = jwt.sign(userForToken, process.env.SECRET);
-  console.log('token', token);
+  const token = jwt.sign(userForToken, config.SECRET);
+
   response
     .status(200)
     .send({ token, username: user.username, name: user.name });

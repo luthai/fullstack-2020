@@ -53,12 +53,10 @@ describe('when there is initially one user in db', () => {
       name: 'Johnson',
     };
 
-    const failUser = await api
+    await api
       .post('/api/users')
       .send(newUser)
       .expect(400);
-
-    expect(failUser.error.message).toBe('cannot POST /api/users (400)');
 
     // password less than 3
     const newUser2 = {
@@ -67,12 +65,10 @@ describe('when there is initially one user in db', () => {
       password: 'fd',
     };
 
-    const failUser2 = await api
+    await api
       .post('/api/users')
       .send(newUser2)
       .expect(400);
-
-    expect(failUser2.error.message).toBe('cannot POST /api/users (400)');
 
     const usersAtEnd = await helper.usersInDb();
     expect(usersAtEnd).toHaveLength(usersAtStart.length);
@@ -87,12 +83,10 @@ describe('when there is initially one user in db', () => {
       password: 'fdlfldsfjdskl',
     };
 
-    const failUser = await api
+    await api
       .post('/api/users')
       .send(newUser)
       .expect(400);
-
-    expect(failUser.error.message).toBe('cannot POST /api/users (400)');
 
     const usersAtEnd = await helper.usersInDb();
     expect(usersAtEnd).toHaveLength(usersAtStart.length);

@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const jwt = require('jsonwebtoken');
 const blogsRouter = require('express').Router();
+const config = require('../utils/config');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 
@@ -12,7 +13,6 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const { body } = request;
-
   if (body.title === undefined) {
     return response.status(400).json({
       error: 'blog missing',
@@ -20,12 +20,13 @@ blogsRouter.post('/', async (request, response) => {
   }
 
   const { token } = request;
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  if (!token || !decodedToken.id) {
+  if (token === undefined) {
     return response.status(401).json({
       error: 'token missing or invalid',
     });
   }
+
+  const decodedToken = jwt.verify(token, config.SECRET);
   const user = await User.findById(decodedToken.id);
 
   const blog = new Blog({
@@ -45,14 +46,15 @@ blogsRouter.post('/', async (request, response) => {
 
 blogsRouter.delete('/:id', async (request, response) => {
   const { token } = request;
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  if (!token || !decodedToken.id) {
+  if (token === undefined) {
     return response.status(401).json({
       error: 'token missing or invalid',
     });
   }
 
+  const decodedToken = jwt.verify(token, process.env.SECRET);
   const user = await User.findById(decodedToken.id);
+
   const blog = await Blog.findById(request.params.id);
   if (blog.user.toString() !== user.id.toString()) {
     return response.status(401).json({
@@ -66,6 +68,23 @@ blogsRouter.delete('/:id', async (request, response) => {
 
 blogsRouter.put('/:id', async (request, response) => {
   const { body } = request;
+
+  const { token } = request;
+  if (token === undefined) {
+    return response.status(401).json({
+      error: 'token missing or invalid',
+    });
+  }
+
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  const user = await User.findById(decodedToken.id);
+
+  const blog = await Blog.findById(request.params.id);
+  if (blog.user.toString() !== user.id.toString()) {
+    return response.status(401).json({
+      error: 'cannot update other users blogs',
+    });
+  }
 
   const savedBlog = await Blog.findByIdAndUpdate(request.params.id, body, { new: true });
   response.status(200).json(savedBlog);
