@@ -6,8 +6,4 @@ const Blog = ({ blog }) => (
   </div>
 )
 
-Blog.propTypes = {
-  blog: PropTypes.object,
-}
-
 export default Blog
