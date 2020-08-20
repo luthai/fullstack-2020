@@ -23,3 +23,13 @@ ul.no-bullets {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+button.logoutButton {
+  background-color: white; /* Green */
+  border: 2px solid grey;
+  border-radius: 6px;
+  padding: 1px 4px;
+  margin: 2px;
+  color: black;
+  cursor: pointer;
+}
