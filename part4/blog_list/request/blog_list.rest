@@ -2,13 +2,13 @@
 
 POST {{baseUrl}}/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMzY5OTQ0NDdkYjhhMjQ1MDlmMTdjOSIsImlhdCI6MTU5NzQxNjM1Mn0.jIGevHdhFkYrDz-Cl4M4eqRnG3p4FvMqR25NyzyY1lA
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOiI1ZjNlNDBhNTQwN2I4NTNiMzgxYjgzZTMiLCJpYXQiOjE1OTc5MTc3NzB9.hXpDWqPcjZhb3oGYaZHmZE6U0c7UTWzEw1rQHqI5MRo
 
 {
-    "title": "React",
-    "author": "Michael Chan",
-    "url": "https://reac.com/",
-    "likes": 15
+    "title": "Canonical string reduction",
+    "author": "Edsger W. Dijkstra",
+    "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+    "likes": 12
 }
 
 ###################################
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 {
    "username": "admin",
-   "name": "Steven",
+   "name": "Kevin",
    "password": "Fish"
 }
 
