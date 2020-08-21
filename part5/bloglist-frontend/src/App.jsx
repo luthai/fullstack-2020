@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import ErrorNotification from './components/ErrorNotification';
-import BlogForm from './components/BlogForm';
+import Blog from './components/Blog';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import './App.css';
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({
+    username: '', password: '',
+  });
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [blogs, setBlogs] = useState([]);
@@ -28,16 +29,20 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const logInUser = await loginService.login({
-        username, password,
+      const loginUser = await loginService.login({
+        username: credentials.username,
+        password: credentials.password,
       });
 
       window.localStorage.setItem(
-        'loggedBloglistUser', JSON.stringify(logInUser),
+        'loggedBloglistUser', JSON.stringify(loginUser),
       );
-      setUser(logInUser);
-      setUsername('');
-      setPassword('');
+      setUser(loginUser);
+      setCredentials((prev) => ({
+        ...prev,
+        username: '',
+        password: '',
+      }));
     } catch (exception) {
       setErrorMessage('Wrong credentials');
       setTimeout(() => {
@@ -51,6 +56,42 @@ const App = () => {
     setUser(null);
   };
 
+  /*
+  <div>
+                <h2>create new</h2>
+                <form onSubmit={addNewBlog}>
+                  <div>
+                    title:
+                    <input
+                      type="text"
+                      value={title}
+                      name="Title"
+                      onChange={({ target }) => setTitle(target.value)}
+                    />
+                  </div>
+                  <div>
+                    title:
+                    <input
+                      type="text"
+                      value={author}
+                      name="Title"
+                      onChange={({ target }) => setAuthor(target.value)}
+                    />
+                  </div>
+                  <div>
+                    title:
+                    <input
+                      type="text"
+                      value={url}
+                      name="Title"
+                      onChange={({ target }) => setUrl(target.value)}
+                    />
+                  </div>
+                  <button className="Button" type="submit">create</button>
+                </form>
+              </div>
+  */
+
   return (
     <div>
       <ErrorNotification errorMessage={errorMessage} />
@@ -61,10 +102,8 @@ const App = () => {
               <h2>Log in to application</h2>
               <LoginForm
                 handleLogin={handleLogin}
-                username={username}
-                setUsername={setUsername}
-                password={password}
-                setPassword={setPassword}
+                credentials={credentials}
+                setCredentials={setCredentials}
               />
             </div>
           )
@@ -72,7 +111,13 @@ const App = () => {
             <div>
               <h2>Blogs</h2>
               <br />
-              <BlogForm user={user} blogs={blogs} handleLogout={handleLogout} />
+              <div>
+                <p>{user.username} logged in
+                  <button className="logoutButton" type="button" onClick={handleLogout}>Logout</button>
+                </p>
+              </div>
+              <br />
+              {blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
             </div>
           )
       }
