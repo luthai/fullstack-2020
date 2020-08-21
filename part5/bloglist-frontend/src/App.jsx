@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import ErrorNotification from './components/ErrorNotification';
+import Notification from './components/Notification';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
 import blogService from './services/blogs';
@@ -16,6 +17,7 @@ const App = () => {
   });
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
@@ -48,8 +50,13 @@ const App = () => {
         username: '',
         password: '',
       }));
+
+      setMessage(`${loginUser.username} is logged in!`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     } catch (exception) {
-      setErrorMessage(exception.message);
+      setErrorMessage('Username or password is invalid!');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -72,8 +79,13 @@ const App = () => {
         author: '',
         url: '',
       }));
+
+      setMessage(`a new ${blog.title} by ${blog.author} added`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     } catch (exception) {
-      setErrorMessage('Fail adding new blog');
+      setErrorMessage('Failed creating new blog');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -82,11 +94,17 @@ const App = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBloglistUser');
+
+    setMessage(`${user.username} is logged out!`);
     setUser(null);
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
   };
 
   return (
     <div>
+      <Notification message={message} />
       <ErrorNotification errorMessage={errorMessage} />
       {
         user === null
