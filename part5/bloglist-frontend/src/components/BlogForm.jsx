@@ -1,31 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Blog from './Blog';
 
 const BlogForm = ({
-  user, blogs, handleLogout,
+  blog, setNewBlog, handleNewBlog,
 }) => (
-  <div>
+  <form onSubmit={handleNewBlog}>
     <div>
-      <p>{user.username} logged in
-        <button className="logoutButton" type="button" onClick={handleLogout}>Logout</button>
-      </p>
+      title:
+      <input
+        type="text"
+        value={blog.title}
+        name="Title"
+        onChange={({ target }) => setNewBlog((prev) => ({
+          ...prev,
+          title: target.value,
+        }))}
+      />
     </div>
-    <br />
-    {blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
-  </div>
+    <div>
+      author:
+      <input
+        type="text"
+        value={blog.author}
+        name="Title"
+        onChange={({ target }) => setNewBlog((prev) => ({
+          ...prev,
+          author: target.value,
+        }))}
+      />
+    </div>
+    <div>
+      url:
+      <input
+        type="text"
+        value={blog.url}
+        name="Title"
+        onChange={({ target }) => setNewBlog((prev) => ({
+          ...prev,
+          url: target.value,
+        }))}
+      />
+    </div>
+    <button className="Button" type="submit">create</button>
+  </form>
 );
 
 BlogForm.propTypes = {
-  user: PropTypes.string,
-  blogs: PropTypes.arrayOf(PropTypes.array),
-  handleLogout: PropTypes.func,
+  blog: PropTypes.objectOf(PropTypes.string),
+  setNewBlog: PropTypes.func,
+  handleNewBlog: PropTypes.func,
 };
 
 BlogForm.defaultProps = {
-  user: '',
-  blogs: [],
-  handleLogout: () => {},
+  blog: '',
+  setNewBlog: () => {},
+  handleNewBlog: () => {},
 };
 
 export default BlogForm;

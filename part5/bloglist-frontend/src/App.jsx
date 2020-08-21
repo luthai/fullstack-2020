@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import ErrorNotification from './components/ErrorNotification';
 import Blog from './components/Blog';
+import BlogForm from './components/BlogForm';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import './App.css';
@@ -10,9 +11,12 @@ const App = () => {
   const [credentials, setCredentials] = useState({
     username: '', password: '',
   });
+  const [newBlog, setNewBlog] = useState({
+    title: '', author: '', url: '',
+  });
+  const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     blogService.getAll().then((blog) => setBlogs(blog));
@@ -37,6 +41,7 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBloglistUser', JSON.stringify(loginUser),
       );
+      blogService.setToken(loginUser.token);
       setUser(loginUser);
       setCredentials((prev) => ({
         ...prev,
@@ -44,7 +49,31 @@ const App = () => {
         password: '',
       }));
     } catch (exception) {
-      setErrorMessage('Wrong credentials');
+      setErrorMessage(exception.message);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
+
+  const handleNewBlog = async (event) => {
+    event.preventDefault();
+    try {
+      const blog = await blogService.create({
+        title: newBlog.title,
+        author: newBlog.author,
+        url: newBlog.url,
+      });
+
+      setBlogs(blogs.concat(blog));
+      setNewBlog((prev) => ({
+        ...prev,
+        title: '',
+        author: '',
+        url: '',
+      }));
+    } catch (exception) {
+      setErrorMessage('Fail adding new blog');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -55,42 +84,6 @@ const App = () => {
     window.localStorage.removeItem('loggedBloglistUser');
     setUser(null);
   };
-
-  /*
-  <div>
-                <h2>create new</h2>
-                <form onSubmit={addNewBlog}>
-                  <div>
-                    title:
-                    <input
-                      type="text"
-                      value={title}
-                      name="Title"
-                      onChange={({ target }) => setTitle(target.value)}
-                    />
-                  </div>
-                  <div>
-                    title:
-                    <input
-                      type="text"
-                      value={author}
-                      name="Title"
-                      onChange={({ target }) => setAuthor(target.value)}
-                    />
-                  </div>
-                  <div>
-                    title:
-                    <input
-                      type="text"
-                      value={url}
-                      name="Title"
-                      onChange={({ target }) => setUrl(target.value)}
-                    />
-                  </div>
-                  <button className="Button" type="submit">create</button>
-                </form>
-              </div>
-  */
 
   return (
     <div>
@@ -117,6 +110,10 @@ const App = () => {
                 </p>
               </div>
               <br />
+              <div>
+                <h2>create new</h2>
+                <BlogForm handleNewBlog={handleNewBlog} blog={newBlog} setNewBlog={setNewBlog} />
+              </div>
               {blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
             </div>
           )
