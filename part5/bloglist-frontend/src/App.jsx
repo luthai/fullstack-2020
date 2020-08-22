@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import ErrorNotification from './components/ErrorNotification';
 import Notification from './components/Notification';
+import Togglable from './components/Togglable';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
 import blogService from './services/blogs';
@@ -102,6 +103,16 @@ const App = () => {
     }, 5000);
   };
 
+  const noteForm = () => (
+    <Togglable buttonLabel="new note">
+      <BlogForm
+        handleNewBlog={handleNewBlog}
+        blog={newBlog}
+        setNewBlog={setNewBlog}
+      />
+    </Togglable>
+  );
+
   return (
     <div>
       <Notification message={message} />
@@ -130,7 +141,7 @@ const App = () => {
               <br />
               <div>
                 <h2>create new</h2>
-                <BlogForm handleNewBlog={handleNewBlog} blog={newBlog} setNewBlog={setNewBlog} />
+                {noteForm()}
               </div>
               {blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
             </div>
