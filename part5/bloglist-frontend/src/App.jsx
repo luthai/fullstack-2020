@@ -13,9 +13,6 @@ const App = () => {
   const [credentials, setCredentials] = useState({
     username: '', password: '',
   });
-  const [newBlog, setNewBlog] = useState({
-    title: '', author: '', url: '',
-  });
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
@@ -64,24 +61,15 @@ const App = () => {
     }
   };
 
-  const handleNewBlog = async (event) => {
-    event.preventDefault();
+  const addNewBlog = (blogObject) => {
     try {
-      const blog = await blogService.create({
-        title: newBlog.title,
-        author: newBlog.author,
-        url: newBlog.url,
-      });
+      blogService
+        .create(blogObject)
+        .then((returnedBlog) => {
+          setBlogs(blogs.concat(returnedBlog));
+        });
 
-      setBlogs(blogs.concat(blog));
-      setNewBlog((prev) => ({
-        ...prev,
-        title: '',
-        author: '',
-        url: '',
-      }));
-
-      setMessage(`a new ${blog.title} by ${blog.author} added`);
+      setMessage(`a new ${blogObject.title} by ${blogObject.author} added`);
       setTimeout(() => {
         setMessage(null);
       }, 5000);
@@ -105,11 +93,7 @@ const App = () => {
 
   const noteForm = () => (
     <Togglable buttonLabel="new note">
-      <BlogForm
-        handleNewBlog={handleNewBlog}
-        blog={newBlog}
-        setNewBlog={setNewBlog}
-      />
+      <BlogForm createBlog={addNewBlog} />
     </Togglable>
   );
 
