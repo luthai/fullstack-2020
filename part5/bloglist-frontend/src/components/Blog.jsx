@@ -8,11 +8,7 @@ const Blog = ({ blog }) => (
 );
 
 Blog.propTypes = {
-  blog: PropTypes.string,
-};
-
-Blog.defaultProps = {
-  blog: '',
+  blog: PropTypes.string.isRequired,
 };
 
 export default Blog;

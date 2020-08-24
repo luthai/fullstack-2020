@@ -34,15 +34,9 @@ const LoginForm = ({
 );
 
 LoginForm.propTypes = {
-  handleLogin: PropTypes.func,
-  credentials: PropTypes.objectOf(PropTypes.string),
-  setCredentials: PropTypes.func,
-};
-
-LoginForm.defaultProps = {
-  handleLogin: () => {},
-  credentials: '',
-  setCredentials: () => {},
+  handleLogin: PropTypes.func.isRequired,
+  credentials: PropTypes.objectOf(PropTypes.string).isRequired,
+  setCredentials: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

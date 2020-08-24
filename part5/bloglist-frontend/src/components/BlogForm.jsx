@@ -46,15 +46,9 @@ const BlogForm = ({
 );
 
 BlogForm.propTypes = {
-  blog: PropTypes.objectOf(PropTypes.string),
-  setNewBlog: PropTypes.func,
-  handleNewBlog: PropTypes.func,
-};
-
-BlogForm.defaultProps = {
-  blog: '',
-  setNewBlog: () => {},
-  handleNewBlog: () => {},
+  blog: PropTypes.objectOf(PropTypes.string).isRequired,
+  setNewBlog: PropTypes.func.isRequired,
+  handleNewBlog: PropTypes.func.isRequired,
 };
 
 export default BlogForm;
