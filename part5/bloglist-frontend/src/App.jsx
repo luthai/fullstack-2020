@@ -3,7 +3,7 @@ import LoginForm from './components/LoginForm';
 import ErrorNotification from './components/ErrorNotification';
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
-import Blog from './components/Blog';
+import TogglableBlogs from './components/TogglableBlogs';
 import BlogForm from './components/BlogForm';
 import blogService from './services/blogs';
 import loginService from './services/login';
@@ -91,10 +91,16 @@ const App = () => {
     }, 5000);
   };
 
-  const noteForm = () => (
+  const blogForm = () => (
     <Togglable buttonLabel="new note">
       <BlogForm createBlog={addNewBlog} />
     </Togglable>
+  );
+
+  const togglableBlogs = () => (
+    <div>
+      {blogs.map((blog) => <TogglableBlogs key={blog.id} buttonLabel="view" blog={blog} />)}
+    </div>
   );
 
   return (
@@ -125,9 +131,9 @@ const App = () => {
               <br />
               <div>
                 <h2>create new</h2>
-                {noteForm()}
+                {blogForm()}
               </div>
-              {blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
+              {togglableBlogs()}
             </div>
           )
       }
