@@ -11,4 +11,5 @@ module.exports = {
     'linebreak-style': ['error', 'windows'],
     'react/jsx-one-expression-per-line': 'off',
   },
+  parser: "babel-eslint",
 };

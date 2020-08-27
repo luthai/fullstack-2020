@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const BlogForm = ({ createBlog }) => {
-  const [newBlog, setNewBlog] = useState({
+  const initialBlog = {
     title: '', author: '', url: '',
-  });
+  };
+  const [newBlog, setNewBlog] = useState(initialBlog);
 
   const addNewBlog = (event) => {
     event.preventDefault();
@@ -15,12 +16,7 @@ const BlogForm = ({ createBlog }) => {
       url: newBlog.url,
     });
 
-    setNewBlog((prev) => ({
-      ...prev,
-      title: '',
-      author: '',
-      url: '',
-    }));
+    setNewBlog(initialBlog);
   };
 
   return (

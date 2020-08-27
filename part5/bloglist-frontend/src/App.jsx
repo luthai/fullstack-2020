@@ -10,9 +10,11 @@ import loginService from './services/login';
 import './App.css';
 
 const App = () => {
-  const [credentials, setCredentials] = useState({
-    username: '', password: '',
-  });
+  const initialCredentials = {
+    username: '',
+    password: '',
+  };
+  const [credentials, setCredentials] = useState(initialCredentials);
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
@@ -26,6 +28,7 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser');
     if (loggedUserJSON) {
       const loggedUser = JSON.parse(loggedUserJSON);
+      blogService.setToken(loggedUser.token);
       setUser(loggedUser);
     }
   }, []);
@@ -43,11 +46,7 @@ const App = () => {
       );
       blogService.setToken(loginUser.token);
       setUser(loginUser);
-      setCredentials((prev) => ({
-        ...prev,
-        username: '',
-        password: '',
-      }));
+      setCredentials(initialCredentials);
 
       setMessage(`${loginUser.username} is logged in!`);
       setTimeout(() => {
@@ -81,11 +80,27 @@ const App = () => {
     }
   };
 
+  const updateBlog = (blogObject) => {
+    try {
+      blogService
+        .update(blogObject.id, blogObject)
+        .then((returnedBlog) => {
+          setBlogs((blog) => (blog.id !== returnedBlog.id ? blog : returnedBlog));
+        });
+    } catch (exception) {
+      setErrorMessage('Failed updating blog');
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBloglistUser');
 
     setMessage(`${user.username} is logged out!`);
     setUser(null);
+    setCredentials(initialCredentials);
     setTimeout(() => {
       setMessage(null);
     }, 5000);
@@ -99,7 +114,14 @@ const App = () => {
 
   const togglableBlogs = () => (
     <div>
-      {blogs.map((blog) => <TogglableBlogs key={blog.id} buttonLabel="view" blog={blog} />)}
+      {blogs.map((blog) => (
+        <TogglableBlogs
+          key={blog.id}
+          buttonLabel="view"
+          blog={blog}
+          updateBlog={updateBlog}
+        />
+      ))}
     </div>
   );
 
