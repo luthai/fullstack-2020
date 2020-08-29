@@ -114,14 +114,16 @@ const App = () => {
 
   const togglableBlogs = () => (
     <div>
-      {blogs.map((blog) => (
-        <TogglableBlogs
-          key={blog.id}
-          buttonLabel="view"
-          blog={blog}
-          updateBlog={updateBlog}
-        />
-      ))}
+      {blogs
+        .sort((a, b) => b.likes - a.likes)
+        .map((blog) => (
+          <TogglableBlogs
+            key={blog.id}
+            buttonLabel="view"
+            blog={blog}
+            updateBlog={updateBlog}
+          />
+        ))}
     </div>
   );
 
