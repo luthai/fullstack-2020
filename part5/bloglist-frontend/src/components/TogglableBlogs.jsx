@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const TogglableBlogs = ({ buttonLabel, blog, updateBlog }) => {
+const TogglableBlogs = ({
+  buttonLabel, blog, updateBlog, user, deleteBlog,
+}) => {
   const [view, setView] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
 
@@ -23,6 +25,16 @@ const TogglableBlogs = ({ buttonLabel, blog, updateBlog }) => {
     };
 
     updateBlog(newBlog);
+  };
+
+  const deleteBlogButton = (event) => {
+    event.preventDefault();
+
+    // eslint-disable-next-line no-alert
+    const confirm = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`);
+    if (confirm) {
+      deleteBlog(blog);
+    }
   };
 
   return (
@@ -47,6 +59,10 @@ const TogglableBlogs = ({ buttonLabel, blog, updateBlog }) => {
               <br />
               {blog.author}
               <br />
+              <div>
+                {blog.user.username === user.username
+                && <button className="Button" type="button" onClick={deleteBlogButton}>remove</button>}
+              </div>
             </div>
           )
       }
@@ -58,6 +74,8 @@ TogglableBlogs.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   blog: PropTypes.string.isRequired,
   updateBlog: PropTypes.func.isRequired,
+  user: PropTypes.objectOf(PropTypes.string).isRequired,
+  deleteBlog: PropTypes.func.isRequired,
 };
 
 export default TogglableBlogs;

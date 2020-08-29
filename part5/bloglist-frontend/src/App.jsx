@@ -95,6 +95,26 @@ const App = () => {
     }
   };
 
+  const deleteBlog = (blogObject) => {
+    try {
+      blogService
+        .deleteBlogRouter(blogObject.id)
+        .then((returnedBlog) => {
+          setBlogs(returnedBlog);
+        });
+
+      setMessage(`${blogObject.title} by ${blogObject.author} removed`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (exception) {
+      setErrorMessage('Failed deleting blog');
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBloglistUser');
 
@@ -122,6 +142,8 @@ const App = () => {
             buttonLabel="view"
             blog={blog}
             updateBlog={updateBlog}
+            user={user}
+            deleteBlog={deleteBlog}
           />
         ))}
     </div>
