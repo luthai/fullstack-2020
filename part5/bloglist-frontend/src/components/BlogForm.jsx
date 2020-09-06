@@ -24,9 +24,9 @@ const BlogForm = ({ createBlog }) => {
       <div>
         title:
         <input
+          id="title"
           type="text"
           value={newBlog.title}
-          name="Title"
           onChange={({ target }) => setNewBlog((prev) => ({
             ...prev,
             title: target.value,
@@ -36,9 +36,9 @@ const BlogForm = ({ createBlog }) => {
       <div>
         author:
         <input
+          id="author"
           type="text"
           value={newBlog.author}
-          name="Title"
           onChange={({ target }) => setNewBlog((prev) => ({
             ...prev,
             author: target.value,
@@ -48,9 +48,9 @@ const BlogForm = ({ createBlog }) => {
       <div>
         url:
         <input
+          id="url"
           type="text"
           value={newBlog.url}
-          name="Title"
           onChange={({ target }) => setNewBlog((prev) => ({
             ...prev,
             url: target.value,

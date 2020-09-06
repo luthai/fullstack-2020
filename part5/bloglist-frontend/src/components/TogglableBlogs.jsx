@@ -42,19 +42,19 @@ const TogglableBlogs = ({
       {
         view === false
           ? (
-            <div>
+            <div className="showLess">
               {blog.title} {blog.author}
               <button className="Button" type="button" onClick={toggleView}>{buttonLabel}</button>
             </div>
           )
           : (
-            <div>
+            <div className="showMore">
               {blog.title}
               <button className="Button" type="button" onClick={toggleView}>hide</button>
               <br />
               {blog.url}
               <br />
-              likes {likes}
+              <div className="likes">likes {likes}</div>
               <button className="Button" type="button" onClick={toggleLikes}>like</button>
               <br />
               {blog.author}
@@ -72,7 +72,13 @@ const TogglableBlogs = ({
 
 TogglableBlogs.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
-  blog: PropTypes.string.isRequired,
+  blog: PropTypes.shape({
+    title: PropTypes.string,
+    author: PropTypes.string,
+    likes: PropTypes.number,
+    url: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
   updateBlog: PropTypes.func.isRequired,
   user: PropTypes.objectOf(PropTypes.string).isRequired,
   deleteBlog: PropTypes.func.isRequired,

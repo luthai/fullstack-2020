@@ -4,8 +4,6 @@
   "private": true,
   "main": "index.jsx",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "prop-types": "^15.7.2",
@@ -35,8 +33,11 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
     "babel-eslint": "^10.1.0",
-    "eslint-config-airbnb": "^18.2.0"
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-jest": "^23.20.0"
   },
   "proxy": "http://localhost:3001"
 }
