@@ -17,7 +17,6 @@ describe('<BlogForm />', () => {
     const urlInput = component.container.querySelector('#url')
     const form = component.container.querySelector('form')
 
-  
     fireEvent.change(titleInput, {
       target: { value: 'React testing' },
     })
