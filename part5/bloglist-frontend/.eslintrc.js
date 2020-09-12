@@ -6,6 +6,7 @@ module.exports = {
     jest: true,
     browser: true,
     "jest/globals": true,
+    "cypress/globals": true
   },
   extends: 'airbnb',
   rules: {
@@ -13,4 +14,5 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
   },
   parser: "babel-eslint",
+  plugins: "cypress"
 };
