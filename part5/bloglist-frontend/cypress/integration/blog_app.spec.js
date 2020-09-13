@@ -62,15 +62,15 @@ describe('Blog app', function() {
         .contains('view')
         .click()
 
-      cy.contains('title2')
-        .contains('likes 0')
+      cy.get('#likes')
+        .contains('9')
 
       cy.contains('title2')
         .get('#likeBtn')
         .click()
 
-        cy.contains('title2')
-        .contains('likes 1')
+      cy.get('#likes')
+        .contains('10')
     })
 
     it('a user can delete a blog', function() {
@@ -103,6 +103,20 @@ describe('Blog app', function() {
         cy.get('#deleteBtn').should('not.exist')
     })
 
-
+    it('blogs is sorted by likes descending', function() {
+      let prev = 100
+      cy.get('#blog-list>div').then(blogs => {
+        for (let i = 0; i < blogs.length; i++) {
+          cy.wrap(blogs[i]).get('#viewBtn').click()
+          cy.wrap(blogs[i])
+            .find('.likes')
+            .then(el => {
+              const currentLike = parseInt(el.text())
+              expect(prev).to.be.greaterThan(currentLike)
+              prev = currentLike
+            })
+        }
+      })
+    })
   })
 })

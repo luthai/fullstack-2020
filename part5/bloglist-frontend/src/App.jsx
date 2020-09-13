@@ -137,7 +137,7 @@ const App = () => {
   );
 
   const togglableBlogs = () => (
-    <div>
+    <div id="blog-list">
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (

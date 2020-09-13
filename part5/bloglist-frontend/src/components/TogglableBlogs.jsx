@@ -44,17 +44,17 @@ const TogglableBlogs = ({
           ? (
             <div className="showLess">
               {blog.title} {blog.author}
-              <button className="Button" type="button" onClick={toggleView}>{buttonLabel}</button>
+              <button id="viewBtn" className="Button" type="button" onClick={toggleView}>{buttonLabel}</button>
             </div>
           )
           : (
             <div className="showMore">
               {blog.title}
-              <button className="Button" type="button" onClick={toggleView}>hide</button>
+              <button id="hideBtn" className="Button" type="button" onClick={toggleView}>hide</button>
               <br />
               {blog.url}
               <br />
-              <div className="likes">likes {likes}</div>
+              likes <span id="likes" className="likes">{likes}</span>
               <button id="likeBtn" className="Button" type="button" onClick={toggleLikes}>like</button>
               <br />
               {blog.author}
