@@ -28,9 +28,6 @@ describe('<BlogForm />', () => {
     })
 
     fireEvent.submit(form);
-    
-    //{ title: 'React testing', author: '', url: '' } Don't know why:(
-    console.log(createBlog.mock.calls[0][0])
 
     expect(createBlog.mock.calls).toHaveLength(1)
     expect(createBlog.mock.calls[0][0].title).toBe('React testing')

@@ -42,6 +42,9 @@ describe('Blog app', function() {
   describe('when logged in', function() {
     beforeEach(function() {
       cy.login({ username: 'admin', password: 'sekret' })
+      cy.createBlog({ title: 'title1', author: 'author1', url: 'www.url1.com', likes: 7 })
+      cy.createBlog({ title: 'title2', author: 'author2', url: 'www.url2.com', likes: 9 })
+      cy.createBlog({ title: 'title3', author: 'author3', url: 'www.url3.com', likes: 13 })
     })
 
     it('a new note can be created', function() {
@@ -53,5 +56,53 @@ describe('Blog app', function() {
 
       cy.contains('a new blog Stevenson')
     })
+
+    it('a user can like a blog', function() {
+      cy.contains('title2')
+        .contains('view')
+        .click()
+
+      cy.contains('title2')
+        .contains('likes 0')
+
+      cy.contains('title2')
+        .get('#likeBtn')
+        .click()
+
+        cy.contains('title2')
+        .contains('likes 1')
+    })
+
+    it('a user can delete a blog', function() {
+      cy.get('#title2').should('exist')
+
+      cy.contains('title2')
+        .contains('view')
+        .click()
+
+      cy.contains('title2')
+        .get('#deleteBtn')
+        .click()
+
+      cy.get('#title2').should('not.exist')
+    })
+
+    it('other user cannot delete blog', function() {
+      const user = {
+        name: "Tom",
+        username: "Tom",
+        password: "sekret",
+      }
+      cy.request('POST', 'http://localhost:3001/api/users/', user)
+      cy.login({ username: 'Tom', password: 'sekret' })
+
+      cy.contains('title2')
+        .contains('view')
+        .click()
+      
+        cy.get('#deleteBtn').should('not.exist')
+    })
+
+
   })
 })

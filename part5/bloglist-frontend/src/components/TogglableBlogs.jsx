@@ -38,7 +38,7 @@ const TogglableBlogs = ({
   };
 
   return (
-    <div className="blog">
+    <div id={blog.title} className="blog">
       {
         view === false
           ? (
@@ -55,13 +55,13 @@ const TogglableBlogs = ({
               {blog.url}
               <br />
               <div className="likes">likes {likes}</div>
-              <button className="Button" type="button" onClick={toggleLikes}>like</button>
+              <button id="likeBtn" className="Button" type="button" onClick={toggleLikes}>like</button>
               <br />
               {blog.author}
               <br />
               <div>
                 {blog.user.username === user.username
-                && <button className="Button" type="button" onClick={deleteBlogButton}>remove</button>}
+                && <button id="deleteBtn" className="Button" type="button" onClick={deleteBlogButton}>remove</button>}
               </div>
             </div>
           )

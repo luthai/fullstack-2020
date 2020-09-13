@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const BlogForm = ({ createBlog }) => {
-  const initialBlog = {
-    title: '', author: '', url: '',
-  };
-  const [newBlog, setNewBlog] = useState(initialBlog);
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
 
   const addNewBlog = (event) => {
     event.preventDefault();
 
     createBlog({
-      title: newBlog.title,
-      author: newBlog.author,
-      url: newBlog.url,
+      title: title,
+      author: author,
+      url: url,
     });
 
-    setNewBlog(initialBlog);
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   };
 
   return (
@@ -26,11 +27,8 @@ const BlogForm = ({ createBlog }) => {
         <input
           id="title"
           type="text"
-          value={newBlog.title}
-          onChange={({ target }) => setNewBlog((prev) => ({
-            ...prev,
-            title: target.value,
-          }))}
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
         />
       </div>
       <div>
@@ -38,11 +36,8 @@ const BlogForm = ({ createBlog }) => {
         <input
           id="author"
           type="text"
-          value={newBlog.author}
-          onChange={({ target }) => setNewBlog((prev) => ({
-            ...prev,
-            author: target.value,
-          }))}
+          value={author}
+          onChange={({ target }) => setAuthor(target.value)}
         />
       </div>
       <div>
@@ -50,11 +45,8 @@ const BlogForm = ({ createBlog }) => {
         <input
           id="url"
           type="text"
-          value={newBlog.url}
-          onChange={({ target }) => setNewBlog((prev) => ({
-            ...prev,
-            url: target.value,
-          }))}
+          value={url}
+          onChange={({ target }) => setUrl(target.value)}
         />
       </div>
       <button id="create-btn" className="Button" type="submit">create</button>

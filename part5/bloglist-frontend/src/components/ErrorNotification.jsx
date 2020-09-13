@@ -14,7 +14,11 @@ const ErrorNotification = ({ errorMessage }) => {
 };
 
 ErrorNotification.propTypes = {
-  errorMessage: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
 };
+
+ErrorNotification.defaultProps = {
+  errorMessage: null,
+}
 
 export default ErrorNotification;
