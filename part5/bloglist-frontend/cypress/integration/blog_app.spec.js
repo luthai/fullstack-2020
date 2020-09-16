@@ -100,7 +100,7 @@ describe('Blog app', function() {
         .contains('view')
         .click()
       
-        cy.get('#deleteBtn').should('not.exist')
+      cy.get('#deleteBtn').should('not.exist')
     })
 
     it('blogs is sorted by likes descending', function() {
