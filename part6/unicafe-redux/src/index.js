@@ -30,7 +30,6 @@ const App = () => {
     })
   }
 
-  console.log(store.getState().good)
   return (
     <div>
       <button onClick={good}>good</button> 
