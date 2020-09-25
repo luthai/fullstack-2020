@@ -11,10 +11,13 @@ const AnecdoteList = () => {
     anecdote.content.toUpperCase().includes(filter.toLocaleUpperCase()))
 
   const addVote = (anecdote) => {
-    dispatch(vote(anecdote.id))
-    dispatch(voteNotification(`you voted "${anecdote.content}"`))
+    const updateOject = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
+    dispatch(vote(updateOject))
 
-    setTimeout(() => dispatch(voteNotification(null)), 5000);
+    dispatch(voteNotification(`you voted "${anecdote.content}"`, 5))
   }
 
   return (
