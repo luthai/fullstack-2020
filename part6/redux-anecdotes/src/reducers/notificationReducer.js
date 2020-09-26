@@ -9,19 +9,22 @@ const notificationReducer = (state = null, action) => {
   }
 }
 
+const timeOut = []
 export const voteNotification = (message, time) => {
   return async dispatch => {
     await dispatch({
       type: 'VOTE',
       data: message
-    })
+    })  
 
-    setTimeout(() => {
+    timeOut.forEach(clearTimeout)
+
+    timeOut.push(setTimeout(() => {
       dispatch({
         type: 'RESET',
         data: null
       })
-    }, time * 1000)
+    }, time * 1000))   
   }
 }
 
