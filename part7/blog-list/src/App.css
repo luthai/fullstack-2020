@@ -1,0 +1,42 @@
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+
+.message {
+  color: green;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.errorMessage {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button.Button {
+  background-color: white; /* Green */
+  border: 2px solid grey;
+  border-radius: 6px;
+  padding: 1px 4px;
+  margin: 2px;
+  color: black;
+  cursor: pointer;
+}
+
+.blog {
+  padding-top: 10px;
+  padding-left: 2px;
+  border: 1px outset black;
+  margin-bottom: 5px;
+}
