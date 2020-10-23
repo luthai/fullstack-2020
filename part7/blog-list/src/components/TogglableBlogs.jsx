@@ -78,6 +78,7 @@ TogglableBlogs.propTypes = {
     likes: PropTypes.number,
     url: PropTypes.string,
     id: PropTypes.string,
+    user: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   updateBlog: PropTypes.func.isRequired,
   user: PropTypes.objectOf(PropTypes.string).isRequired,

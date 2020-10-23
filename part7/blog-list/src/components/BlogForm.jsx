@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createBlogReducer } from '../Reducers/blogReducer';
 
-const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
-
+const BlogForm = (props) => {
   const addNewBlog = (event) => {
     event.preventDefault();
-
-    createBlog({
-      title: title,
-      author: author,
-      url: url,
+    const title = event.target.title.value;
+    const author = event.target.author.value;
+    const url = event.target.url.value;
+    event.target.title.value = '';
+    event.target.author.value = '';
+    event.target.url.value = '';
+    props.createBlogReducer({
+      title, author, url,
     });
-
-    setTitle('')
-    setAuthor('')
-    setUrl('')
   };
 
   return (
@@ -27,8 +24,7 @@ const BlogForm = ({ createBlog }) => {
         <input
           id="title"
           type="text"
-          value={title}
-          onChange={({ target }) => setTitle(target.value)}
+          name="text"
         />
       </div>
       <div>
@@ -36,8 +32,7 @@ const BlogForm = ({ createBlog }) => {
         <input
           id="author"
           type="text"
-          value={author}
-          onChange={({ target }) => setAuthor(target.value)}
+          name="author"
         />
       </div>
       <div>
@@ -45,8 +40,7 @@ const BlogForm = ({ createBlog }) => {
         <input
           id="url"
           type="text"
-          value={url}
-          onChange={({ target }) => setUrl(target.value)}
+          name="url"
         />
       </div>
       <button id="create-btn" className="Button" type="submit">create</button>
@@ -55,7 +49,7 @@ const BlogForm = ({ createBlog }) => {
 };
 
 BlogForm.propTypes = {
-  createBlog: PropTypes.func.isRequired,
+  createBlogReducer: PropTypes.func.isRequired,
 };
 
-export default BlogForm;
+export default connect(null, { createBlogReducer })(BlogForm);
