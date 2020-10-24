@@ -19,9 +19,9 @@ const App = () => {
     if (loggedUserJSON) {
       const loggedUser = JSON.parse(loggedUserJSON);
       blogService.setToken(loggedUser.token);
-      setUser(loggedUser);
+      dispatch(setUser(loggedUser));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

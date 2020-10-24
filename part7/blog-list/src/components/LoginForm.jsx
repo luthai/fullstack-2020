@@ -25,7 +25,7 @@ const LoginForm = (props) => {
       );
       blogService.setToken(loginUser.token);
       props.setUser(loginUser);
-      props.setMessage(`${loginUser.username} is logged in.`, 5);
+      props.setMessage(`${loginUser.name} is logged in.`, 5);
     } catch (exception) {
       props.setErrorMessage('Username or password is invalid!', 5);
     }
