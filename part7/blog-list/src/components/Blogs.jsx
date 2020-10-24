@@ -5,15 +5,24 @@ import PropTypes from 'prop-types';
 import TogglableBlogs from './TogglableBlogs';
 import { updateBlogReducer, deleteBlogReducer } from '../Reducers/blogReducer';
 import { setMessage } from '../Reducers/notificationReducer';
+import { setErrorMessage } from '../Reducers/errorNotificationReducer';
 
 const Blogs = (props) => {
   const updateBlog = async (object) => {
-    props.updateBlogReducer(object);
+    try {
+      props.updateBlogReducer(object);
+    } catch (exception) {
+      props.setErrorMessage(`Failed updating blog ${object.title}`, 5);
+    }
   };
 
   const deleteBlog = (object) => {
-    props.deleteBlogReducer(object.id);
-    props.setMessage(`Blog ${object.title} by ${object.author} is removed.`, 5);
+    try {
+      props.deleteBlogReducer(object.id);
+      props.setMessage(`Blog ${object.title} by ${object.author} is removed.`, 5);
+    } catch (exception) {
+      props.setErrorMessage(`Failed to delete blog ${object.title}`);
+    }
   };
 
   return (
@@ -43,6 +52,7 @@ const mapDispatchToProps = {
   updateBlogReducer,
   deleteBlogReducer,
   setMessage,
+  setErrorMessage,
 };
 
 const ConnectedBlogs = connect(
@@ -57,14 +67,11 @@ Blogs.propTypes = {
     url: PropTypes.string,
     likes: PropTypes.number,
   })).isRequired,
-  user: PropTypes.objectOf(PropTypes.string),
+  user: PropTypes.objectOf(PropTypes.string).isRequired,
   updateBlogReducer: PropTypes.func.isRequired,
   deleteBlogReducer: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
-};
-
-Blogs.defaultProps = {
-  user: null,
+  setErrorMessage: PropTypes.func.isRequired,
 };
 
 export default ConnectedBlogs;

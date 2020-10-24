@@ -81,8 +81,12 @@ TogglableBlogs.propTypes = {
     user: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   updateBlog: PropTypes.func.isRequired,
-  user: PropTypes.objectOf(PropTypes.string).isRequired,
+  user: PropTypes.objectOf(PropTypes.string),
   deleteBlog: PropTypes.func.isRequired,
+};
+
+TogglableBlogs.defaultProps = {
+  user: null,
 };
 
 export default TogglableBlogs;
