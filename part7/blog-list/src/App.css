@@ -1,3 +1,7 @@
+.nav-link {
+  padding: 5px;
+}
+
 ul.no-bullets {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove padding */

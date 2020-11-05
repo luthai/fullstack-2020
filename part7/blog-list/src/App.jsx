@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import blogService from './services/blogs';
 import { initializeBlogs } from './Reducers/blogReducer';
+import { initializeUsers } from './Reducers/usersReducer';
 import { setUser } from './Reducers/userReducer';
 import VisibilityFilter from './components/VisibilityFilter';
 import Notification from './components/Notification';
@@ -12,6 +13,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(initializeBlogs());
+    dispatch(initializeUsers());
   }, [dispatch]);
 
   useEffect(() => {

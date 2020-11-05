@@ -8,6 +8,8 @@ import { setMessage } from '../Reducers/notificationReducer';
 import { setErrorMessage } from '../Reducers/errorNotificationReducer';
 
 const Blogs = (props) => {
+  const { blogs } = props;
+
   const updateBlog = async (object) => {
     try {
       props.updateBlogReducer(object);
@@ -27,7 +29,7 @@ const Blogs = (props) => {
 
   return (
     <div id="blog-list">
-      {props.blogs
+      {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
           <TogglableBlogs
