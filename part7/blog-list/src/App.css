@@ -44,3 +44,7 @@ button.Button {
   border: 1px outset black;
   margin-bottom: 5px;
 }
+
+.group-element {
+  line-height: 1.2;
+}

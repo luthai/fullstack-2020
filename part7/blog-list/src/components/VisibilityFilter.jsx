@@ -1,38 +1,19 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useRef } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch, Route, Link,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Home from './Home';
 import LoginForm from './LoginForm';
 import LogoutForm from './LogoutForm';
-import BlogForm from './BlogForm';
-import Togglable from './Togglable';
-import Blogs from './Blogs';
 import Users from './UsersView';
 import UserBlogList from './UserBlogList';
+import BlogsList from './BlogsList';
 
 const VisibilityFilter = (props) => {
-  const blogFormRef = useRef();
-
-  const blogForm = () => (
-    <Togglable buttonLabel="new blog" ref={blogFormRef}>
-      <BlogForm />
-    </Togglable>
-  );
-
-  const Home = () => (
-    <div>
-      <div>
-        <h2>create new</h2>
-        {blogForm()}
-      </div>
-      <Blogs />
-    </div>
-  );
-
   return (
     <div>
       <Router>
@@ -58,6 +39,7 @@ const VisibilityFilter = (props) => {
                 <Switch>
                   <Route path="/users/:id" component={UserBlogList} />
                   <Route path="/users" component={Users} />
+                  <Route path="/blogs/:id" component={BlogsList} />
                   <Route path="/" component={Home} />
                 </Switch>
               </div>
