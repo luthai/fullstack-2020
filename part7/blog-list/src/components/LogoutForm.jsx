@@ -13,7 +13,7 @@ const LogoutForm = (props) => {
 
   return (
     <div>
-      <button className="logoutButton" type="button" onClick={handleLogout}>Logout</button>
+      <button className="LogoutButton" type="button" onClick={handleLogout}>Logout</button>
     </div>
   );
 };

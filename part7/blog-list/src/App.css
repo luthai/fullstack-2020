@@ -38,6 +38,26 @@ button.Button {
   cursor: pointer;
 }
 
+button.LogoutButton {
+  background-color: white; /* Green */
+  border: 2px solid grey;
+  padding: 0px 4px;
+  margin: 2px;
+  color: black;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.navbar-container {
+  display: flex;
+  background-color: lightgray;
+}
+
+.logout-container {
+  display: flex;
+  padding: 3px;
+}
+
 .blog {
   padding-top: 10px;
   padding-left: 2px;

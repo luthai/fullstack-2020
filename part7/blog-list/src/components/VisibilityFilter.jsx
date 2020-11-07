@@ -11,7 +11,7 @@ import LoginForm from './LoginForm';
 import LogoutForm from './LogoutForm';
 import Users from './UsersView';
 import UserBlogList from './UserBlogList';
-import BlogsList from './BlogsList';
+import BlogView from './BlogView';
 
 const VisibilityFilter = (props) => (
   <div>
@@ -26,19 +26,16 @@ const VisibilityFilter = (props) => (
           )
           : (
             <div>
-              <div>
-                <Link className="nav-link" to="/">home</Link>
+              <div className="navbar-container">
+                <Link className="nav-link" to="/">blogs</Link>
                 <Link className="nav-link" to="/users">users</Link>
+                <div className="logout-container">{props.user.username} logged in <LogoutForm /></div>
               </div>
-              <h2>Blogs</h2>
-              <br />
-              <p>{props.user.username} logged in</p>
-              <LogoutForm />
-              <br />
+              <h2>blog app</h2>
               <Switch>
                 <Route path="/users/:id" component={UserBlogList} />
                 <Route path="/users" component={Users} />
-                <Route path="/blogs/:id" component={BlogsList} />
+                <Route path="/blogs/:id" component={BlogView} />
                 <Route path="/" component={Home} />
               </Switch>
             </div>
