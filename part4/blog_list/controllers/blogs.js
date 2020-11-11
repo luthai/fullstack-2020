@@ -11,6 +11,21 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs);
 });
 
+blogsRouter.get('/:id', async (request, response) => {
+  const { id } = request.params;
+
+  const blog = await Blog.findById(id);
+  response.json(blog);
+});
+
+blogsRouter.get('/:id/comments', async (request, response) => {
+  const { id } = request.params;
+
+  const blog = await Blog.findById(id);
+  const { comments } = blog.toJSON();
+  response.json(comments);
+});
+
 blogsRouter.post('/', async (request, response) => {
   const { body } = request;
   if (body.title === undefined) {
@@ -42,6 +57,23 @@ blogsRouter.post('/', async (request, response) => {
   await user.save();
 
   response.json(savedBlog);
+});
+
+blogsRouter.put('/:id/comments', async (request, response) => {
+  const { body } = request;
+  const { id } = request.params;
+  if (body.comment === undefined) {
+    return response.status(400).json({
+      error: 'comment missing',
+    });
+  }
+
+  const blog = await Blog.findById(id);
+  console.log(blog);
+  blog.comments.push(body.comment);
+  console.log(blog);
+  const savedBlog = await Blog.findByIdAndUpdate(id, blog, { new: true });
+  response.status(200).json(savedBlog);
 });
 
 blogsRouter.delete('/:id', async (request, response) => {
