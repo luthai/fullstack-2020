@@ -44,6 +44,10 @@ const BlogsList = (props) => {
             </div>
             added by {blogParams.author}
           </div>
+          <h3>comments</h3>
+          <ul>
+            {blogParams.comments.map((comment) => <li key={comment}>{comment}</li>)}
+          </ul>
         </div>
       )}
     </div>
