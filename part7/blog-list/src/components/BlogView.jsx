@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { updateBlogReducer } from '../Reducers/blogReducer';
+import { updateBlogReducer, addCommentBlogReducer } from '../Reducers/blogReducer';
 import { setErrorMessage } from '../Reducers/errorNotificationReducer';
 
 const BlogsList = (props) => {
@@ -31,6 +31,17 @@ const BlogsList = (props) => {
     }
   };
 
+  const addComment = (event) => {
+    try {
+      event.preventDefault();
+
+      const comment = event.target.comment.value;
+      props.addCommentBlogReducer(id, comment);
+    } catch (exception) {
+      props.setErrorMessage(`Failed adding comment to blog ${blogParams.title}`, 5);
+    }
+  };
+
   return (
     <div>
       {blogParams !== undefined && (
@@ -45,6 +56,10 @@ const BlogsList = (props) => {
             added by {blogParams.author}
           </div>
           <h3>comments</h3>
+          <form onSubmit={addComment}>
+            <input id="comment" type="text" name="comment" placeholder="new comment" />
+            <button className="Button" type="submit">add comment</button>
+          </form>
           <ul>
             {blogParams.comments.map((comment) => <li key={comment}>{comment}</li>)}
           </ul>
@@ -62,6 +77,7 @@ BlogsList.propTypes = {
     likes: PropTypes.number,
   })).isRequired,
   updateBlogReducer: PropTypes.func.isRequired,
+  addCommentBlogReducer: PropTypes.func.isRequired,
   setErrorMessage: PropTypes.func.isRequired,
 };
 
@@ -71,6 +87,7 @@ const mapPropsToState = (state) => ({
 
 const mapDispatchToProps = {
   updateBlogReducer,
+  addCommentBlogReducer,
   setErrorMessage,
 };
 

@@ -33,6 +33,14 @@ export const updateBlogReducer = (content) => async (dispatch) => {
   });
 };
 
+export const addCommentBlogReducer = (blogId, content) => async (dispatch) => {
+  const object = await blogService.addComment(blogId, content);
+  dispatch({
+    type: 'UPDATE_BLOG',
+    data: object,
+  });
+};
+
 export const deleteBlogReducer = (id) => async (dispatch) => {
   const object = await blogService.deleteBlogRouter(id);
   dispatch({
