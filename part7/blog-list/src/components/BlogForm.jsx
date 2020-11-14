@@ -19,7 +19,7 @@ const BlogForm = (props) => {
   };
 
   return (
-    <Form onSubmit={addNewBlog}>
+    <Form className="row-m-blogform" onSubmit={addNewBlog}>
       <Form.Group>
         <Form.Label>title:</Form.Label>
         <Form.Control
@@ -40,7 +40,7 @@ const BlogForm = (props) => {
           name="url"
         />
       </Form.Group>
-      <Button id="create-btn" className="Button" type="submit">create</Button>
+      <Button id="create-btn" type="submit">create</Button>
     </Form>
   );
 };

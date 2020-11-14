@@ -74,6 +74,10 @@ button.LogoutButton {
   width: 100%;
 }
 
-.row-m-b{
+.row-m-b {
   margin-bottom: 20px;
+}
+
+.row-m-blogform {
+  margin-bottom: 10px;
 }
