@@ -1,20 +1,24 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import {
+  Container, Row, Col,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
-  Switch, Route, Link,
+  Switch, Route,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Home from './Home';
 import LoginForm from './LoginForm';
-import LogoutForm from './LogoutForm';
 import Users from './UsersView';
 import UserBlogList from './UserBlogList';
 import BlogView from './BlogView';
+import NavigationBar from './NavigationBar';
+import Footer from './Footer';
 
 const VisibilityFilter = (props) => (
-  <div>
+  <div className="container">
     <Router>
       {
         props.user === null
@@ -25,19 +29,32 @@ const VisibilityFilter = (props) => (
             </div>
           )
           : (
-            <div>
-              <div className="navbar-container">
-                <Link className="nav-link" to="/">blogs</Link>
-                <Link className="nav-link" to="/users">users</Link>
-                <div className="logout-container">{props.user.username} logged in <LogoutForm /></div>
-              </div>
-              <h2>blog app</h2>
-              <Switch>
-                <Route path="/users/:id" component={UserBlogList} />
-                <Route path="/users" component={Users} />
-                <Route path="/blogs/:id" component={BlogView} />
-                <Route path="/" component={Home} />
-              </Switch>
+            <div className="container">
+              <Container>
+                <Row className="row-m-b">
+                  <Col md={12}>
+                    <NavigationBar />
+                  </Col>
+                </Row>
+                <Row className="row-m-b">
+                  <Col md={12}><h2>blog app</h2></Col>
+                </Row>
+                <Row className="row-m-b">
+                  <Col md={12}>
+                    <Switch>
+                      <Route path="/users/:id" component={UserBlogList} />
+                      <Route path="/users" component={Users} />
+                      <Route path="/blogs/:id" component={BlogView} />
+                      <Route path="/" component={Home} />
+                    </Switch>
+                  </Col>
+                </Row>
+                <Row className="row-m-b">
+                  <Col md={12}>
+                    <Footer />
+                  </Col>
+                </Row>
+              </Container>
             </div>
           )
       }

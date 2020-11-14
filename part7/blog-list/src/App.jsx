@@ -26,7 +26,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="container">
       <Notification />
       <ErrorNotification />
       <VisibilityFilter />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setUser } from '../Reducers/userReducer';
@@ -13,7 +14,7 @@ const LogoutForm = (props) => {
 
   return (
     <div>
-      <button className="LogoutButton" type="button" onClick={handleLogout}>Logout</button>
+      <Button type="button" onClick={handleLogout}>Logout</Button>
     </div>
   );
 };

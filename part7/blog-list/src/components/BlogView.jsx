@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -47,19 +48,21 @@ const BlogsList = (props) => {
       {blogParams !== undefined && (
         <div>
           <h1>{blogParams.title} by {blogParams.author}</h1>
-          <div className="group-element">
+          <div className="row-m-b">
             <a href={`https://${blogParams.url}`}>{blogParams.url}</a>
             <div>
               {blogParams.likes} likes
-              <button id="likeBtn" className="Button" type="button" onClick={updateBlog}>like</button>
+              <Button id="likeBtn" className="Button" type="button" onClick={updateBlog}>like</Button>
             </div>
             added by {blogParams.author}
           </div>
           <h3>comments</h3>
-          <form onSubmit={addComment}>
-            <input id="comment" type="text" name="comment" placeholder="new comment" />
-            <button className="Button" type="submit">add comment</button>
-          </form>
+          <Form onSubmit={addComment}>
+            <Form.Group>
+              <Form.Control id="comment" type="text" name="comment" placeholder="new comment" />
+            </Form.Group>
+            <Button type="submit">add comment</Button>
+          </Form>
           <ul>
             {blogParams.comments.map((comment) => <li key={comment}>{comment}</li>)}
           </ul>

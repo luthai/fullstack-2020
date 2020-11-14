@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 const ErrorNotification = () => {
@@ -8,8 +9,10 @@ const ErrorNotification = () => {
   }
 
   return (
-    <div className="errorMessage">
-      {notification}
+    <div className="container">
+      <Alert variant="danger">
+        {notification}
+      </Alert>
     </div>
   );
 };

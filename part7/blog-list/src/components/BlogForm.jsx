@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createBlogReducer } from '../Reducers/blogReducer';
@@ -18,33 +19,29 @@ const BlogForm = (props) => {
   };
 
   return (
-    <form onSubmit={addNewBlog}>
-      <div>
-        title:
-        <input
+    <Form onSubmit={addNewBlog}>
+      <Form.Group>
+        <Form.Label>title:</Form.Label>
+        <Form.Control
           id="title"
           type="text"
           name="text"
         />
-      </div>
-      <div>
-        author:
-        <input
+        <Form.Label>author:</Form.Label>
+        <Form.Control
           id="author"
           type="text"
           name="author"
         />
-      </div>
-      <div>
-        url:
-        <input
+        <Form.Label>url:</Form.Label>
+        <Form.Control
           id="url"
           type="text"
           name="url"
         />
-      </div>
-      <button id="create-btn" className="Button" type="submit">create</button>
-    </form>
+      </Form.Group>
+      <Button id="create-btn" className="Button" type="submit">create</Button>
+    </Form>
   );
 };
 

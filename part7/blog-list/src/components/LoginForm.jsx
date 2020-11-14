@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import blogService from '../services/blogs';
@@ -32,25 +33,23 @@ const LoginForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
+    <Form onSubmit={handleLogin}>
+      <Form.Group>
+        <Form.Label>username:</Form.Label>
+        <Form.Control
           id="username"
           type="text"
           name="Username"
         />
-      </div>
-      <div>
-        password
-        <input
+        <Form.Label>password:</Form.Label>
+        <Form.Control
           id="password"
           type="password"
           name="Password"
         />
-      </div>
-      <button id="login-button" type="submit">login</button>
-    </form>
+      </Form.Group>
+      <Button id="login-button" type="submit">login</Button>
+    </Form>
   );
 };
 

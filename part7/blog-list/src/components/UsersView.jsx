@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,7 +10,7 @@ const UsersView = (props) => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
+      <Table striped>
         <tbody>
           <tr>
             <th> </th>
@@ -24,7 +25,7 @@ const UsersView = (props) => {
             ))
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };
