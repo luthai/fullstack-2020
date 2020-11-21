@@ -108,16 +108,12 @@ const resolvers = {
     authorCount: () => authors.length,
     bookCount: () => books.length,
     allBooks: (root, args) => {
-      if (args.author === undefined && args.genre === undefined) {
-        return books
-      } else if (args.author === undefined) {
-        return books.filter((book) => book.genres.includes(args.genre))
-      } else if (args.genre === undefined) {
-        return books.filter((book) => book.author === args.author)
-      } else {
-        const booksFilter = books.filter((book) => book.author === args.author)
-        return booksFilter.filter((book) => book.genres.includes(args.genre))
-      }
+      return books.filter((book) => {
+        const filteredGenres = book.genres.filter((genre) =>
+          genre.includes(args.genre || "")
+       );
+       return book.author.includes(args.author || "") && filteredGenres.length > 0;
+      })
     },
     allAuthors: () => authors,
   },
@@ -125,7 +121,7 @@ const resolvers = {
       bookCount: ({ name }) => books.filter(({ author }) => author === name).length
   }
 }
-//books.filter((book) => book.author === args.author)
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
