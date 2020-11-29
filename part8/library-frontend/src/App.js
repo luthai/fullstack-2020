@@ -5,13 +5,7 @@ import NewBook from './components/NewBook'
 
 const App = () => {
   const [page, setPage] = useState('authors')
-  /*
-  return (
-    <div>
-      {result.data.allAuthors.map(a => a.name).join(', ')}
-    </div>
-  )*/
-
+  
   return (
     <div>
       <div>
