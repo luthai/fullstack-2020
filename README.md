@@ -1,5 +1,5 @@
 # fullstack-2020
-[Full stack open 2020](https://fullstackopen.com/en)
+[Full stack open 2020](https://fullstackopen.com/en)<br/>
 Open course offered by the University of Helsinki
 
 
